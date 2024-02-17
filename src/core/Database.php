@@ -11,16 +11,16 @@ final class Database
      */
     private static array $dummy_database;
 
-    public static function create(string $entityName, object $value): object
+    public static function create(string $tableName, object $value): object
     {
-        self::$dummy_database[$entityName][] = $value;
+        self::$dummy_database[$tableName][] = $value;
         return $value;
     }
 
-    public static function delete(string $entityName, int $key): string
+    public static function delete(string $tableName, int $index): string
     {
-        if (array_key_exists($key, self::$dummy_database[$entityName])) {
-            unset(self::$dummy_database[$entityName][$key]);
+        if (array_key_exists($index, self::$dummy_database[$tableName])) {
+            unset(self::$dummy_database[$tableName][$index]);
             return 'SUCCESSFULLY DELETED';
         } else {
             return 'NOT FOUND';
@@ -28,10 +28,10 @@ final class Database
 
     }
 
-    public static function edit(string $entityName, int $key, string $column, string $newValue): string
+    public static function edit(string $tableName, int $index, string $column, string $newValue): string
     {
-        if (array_key_exists($key, self::$dummy_database[$entityName])) {
-            self::$dummy_database[$entityName][$key]->$column = $newValue;
+        if (array_key_exists($index, self::$dummy_database[$tableName])) {
+            self::$dummy_database[$tableName][$index]->$column = $newValue;
             return 'SUCCESSFULLY UPDATED';
         } else {
             return 'NOT FOUND';
@@ -39,9 +39,9 @@ final class Database
 
     }
 
-    public static function findIndex(string $entityName, string $column, string $value): int|string
+    public static function findIndex(string $tableName, string $column, string $value): int|string
     {
-        $itemIndex = array_search(self::findOneBy($entityName, $column, $value), self::$dummy_database[$entityName]);
+        $itemIndex = array_search(self::findOneBy($tableName, $column, $value), self::$dummy_database[$tableName]);
 
         if (is_int($itemIndex)) {
             return $itemIndex;
@@ -50,23 +50,23 @@ final class Database
         }
     }
 
-    public static function findOneBy(string $entityName, string $column, string $value): object|string
+    public static function findOneBy(string $tableName, string $column, string $value): object|string
     {
-        $itemIndex = array_search($value, array_column(self::$dummy_database[$entityName], $column));
+        $itemIndex = array_search($value, array_column(self::$dummy_database[$tableName], $column));
 
         if (is_int($itemIndex)) {
-            return self::$dummy_database[$entityName][$itemIndex];
+            return self::$dummy_database[$tableName][$itemIndex];
         } else {
             return 'NOT FOUND';
         }
     }
 
-    public static function findAll(string $entityName, string $column = null): array
+    public static function findAll(string $tableName, string $column = null): array
     {
         if (!empty($column)) {
-            return array_column(self::$dummy_database[$entityName], $column);
+            return array_column(self::$dummy_database[$tableName], $column);
         } else {
-            return self::$dummy_database[$entityName];
+            return self::$dummy_database[$tableName];
         }
     }
 
