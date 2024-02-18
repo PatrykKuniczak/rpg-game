@@ -17,24 +17,15 @@ final class Database
         return $value;
     }
 
-    public static function delete(string $tableName, int $index): string
+    public static function delete(string $tableName, string $column, string $value): string
     {
-        if (array_key_exists($index, self::$dummy_database[$tableName])) {
+        $index = Database::findIndex($tableName, $column, $value);
+
+        if (is_int($index)) {
             unset(self::$dummy_database[$tableName][$index]);
-            return 'SUCCESSFULLY DELETED';
+            return 'SUCCESSFULLY DELETED' . PHP_EOL;
         } else {
-            return 'NOT FOUND';
-        }
-
-    }
-
-    public static function edit(string $tableName, int $index, string $column, string $newValue): string
-    {
-        if (array_key_exists($index, self::$dummy_database[$tableName])) {
-            self::$dummy_database[$tableName][$index]->$column = $newValue;
-            return 'SUCCESSFULLY UPDATED';
-        } else {
-            return 'NOT FOUND';
+            return 'NOT FOUND' . PHP_EOL;
         }
 
     }
@@ -46,7 +37,7 @@ final class Database
         if (is_int($itemIndex)) {
             return $itemIndex;
         } else {
-            return 'NOT FOUND';
+            return 'NOT FOUND' . PHP_EOL;
         }
     }
 
@@ -57,17 +48,26 @@ final class Database
         if (is_int($itemIndex)) {
             return self::$dummy_database[$tableName][$itemIndex];
         } else {
-            return 'NOT FOUND';
+            return 'NOT FOUND' . PHP_EOL;
         }
     }
 
-    public static function findAll(string $tableName, string $column = null): array
+    public static function edit(string $tableName, string $column, string $oldValue, string $newValue): string
     {
-        if (!empty($column)) {
-            return array_column(self::$dummy_database[$tableName], $column);
+        $index = Database::findIndex($tableName, $column, $oldValue);
+
+        if (is_int($index)) {
+            self::$dummy_database[$tableName][$index]->$column = $newValue;
+            return 'SUCCESSFULLY UPDATED' . PHP_EOL;
         } else {
-            return self::$dummy_database[$tableName];
+            return 'NOT FOUND' . PHP_EOL;
         }
+
+    }
+
+    public static function findAll(string $tableName): array
+    {
+        return self::$dummy_database[$tableName];
     }
 
     private static function __init__(): void
