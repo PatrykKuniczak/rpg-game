@@ -7,7 +7,6 @@ class Map
     private string $name;
     private int $requiredLvlToJoin;
     private int $mobsAmount;
-
     private array $mobs;
     private float $respTime;
 
