@@ -1,3 +1,5 @@
 <?php
 
-print 'Hello, RPG GAME';
+declare(strict_types=1);
+
+require_once __DIR__ . '\\..\\vendor\\autoload.php';

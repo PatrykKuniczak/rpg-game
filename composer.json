@@ -1,0 +1,9 @@
+{
+  "name": "papryk/rpg-game",
+  "autoload": {
+    "psr-4": {
+      "app\\": "src/"
+    }
+  },
+  "require": {}
+}
