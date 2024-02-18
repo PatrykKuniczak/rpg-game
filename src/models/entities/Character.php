@@ -2,6 +2,8 @@
 
 namespace app\models\entities;
 
+use app\models\entities\equipment\Equipment;
+
 class Character
 {
     private string $name;
@@ -10,8 +12,7 @@ class Character
     private int $age;
     private string $class;
     private int $hp;
-    // TODO: PO DODANIU EQUIPMENT ZMIEN
-    private mixed $equipment;
+    private Equipment $equipment;
     private int $currentExp;
     private int $requiredExpForNextLvl;
 
