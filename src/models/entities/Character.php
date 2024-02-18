@@ -12,11 +12,12 @@ class Character
     private int $age;
     private string $class;
     private int $hp;
+    private int $lvl;
     private Equipment $equipment;
     private int $currentExp;
     private int $requiredExpForNextLvl;
 
-    public function __construct($name, $sex, $height, $age, $class, $hp, $equipment, $currentExp, $requiredExpForNextLvl)
+    public function __construct($name, $sex, $height, $age, $class, $hp, $equipment, $currentExp, $requiredExpForNextLvl, $lvl)
     {
         $this->name = $name;
         $this->sex = $sex;
@@ -27,5 +28,6 @@ class Character
         $this->equipment = $equipment;
         $this->currentExp = $currentExp;
         $this->requiredExpForNextLvl = $requiredExpForNextLvl;
+        $this->lvl = $lvl;
     }
 }
