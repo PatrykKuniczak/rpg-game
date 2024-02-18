@@ -4,12 +4,7 @@ namespace app\core;
 
 abstract class Model
 {
-    const string TABLE_NAME = EntitiesEnum::Character->name;
-
-    public function create(object $value): object
-    {
-        return Database::create(self::TABLE_NAME, $value);
-    }
+    const string TABLE_NAME = self::TABLE_NAME;
 
     public function delete(string $column, string $value): string
     {
@@ -29,6 +24,11 @@ abstract class Model
     public function findOneBy(string $column, string $value): object|string
     {
         return Database::findOneBy(self::TABLE_NAME, $column, $value);
+    }
+
+    protected function create(object $value): object
+    {
+        return Database::create(self::TABLE_NAME, $value);
     }
 }
 
